@@ -1,6 +1,6 @@
 # lua-selections
 
-**`lua-selections`** is a simple terminal UI library for Lua that allows you to prompt users for input via keyboard-navigable menus. Supports text input, arrow-key selection, and 2D option grids.
+**`lua-selections`** is a simple Lua terminal UI library for Lua that allows you to prompt users for input via keyboard-navigable menus. Supports text input, arrow-key selection, and 2D option grids.
 
 ---
 
