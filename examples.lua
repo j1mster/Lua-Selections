@@ -1,3 +1,6 @@
+--Make sure to download catmilk.webp and put it in the directory if youre gonna run the examples script ty love u :3
+
+
 local input = require("selections")
 
 local function doomSequence()
@@ -5,7 +8,7 @@ local function doomSequence()
     input:write("You have unlocked the secret ending: Eternal Clown Mode.")
     repeat
         input:write("HONK HONK 🤡")
-        os.execute("start ./catmilk.webp") -- replace with something funny you have
+        os.execute("start ./catmilk.webp") -- you need the file here
     until false
 end
 
