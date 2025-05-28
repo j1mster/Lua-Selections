@@ -26,58 +26,60 @@ local Colors = {
 local function clamp(x, min, max)
     return (x>max and max) or (x<min and min) or x
 end
+local function stripAnsiCodes(str)
+    return str:gsub('\27%[%d+;%d+m', ''):gsub('\27%[0m', '')
+end
+
+local function getLongestX(localinputobject) -- Equally sep. values by the longest string on the x
+        local longestX = 0
+
+        for _, v in pairs(localinputobject.options) do
+            local a = stripAnsiCodes(v.name)
+            longestX = (#a>longestX and #a) or (longestX)
+            
+            for _, k in pairs(v.subOptions) do
+                local n = stripAnsiCodes(k.name)
+                longestX = (#n>longestX and #n) or (longestX)
+            end
+        end
+
+        return longestX
+end
 
 local function getOptions(localinputobject)
     local active = localinputobject.active
     local str = ""
 
-    local longestX = (function() -- Equally sep. values by the longest string on the x
-        local longestX = 0
-
-        for _, v in pairs(localinputobject.options) do
-            longestX = (#v.name>longestX and #v.name) or (longestX)
-
-            for _, k in pairs(v.subOptions) do
-                longestX = (#k.name>longestX and #k.name) or (longestX)
-            end
-        end
-
-        return longestX
-    end)()
+    local longestX = getLongestX(localinputobject)
 
     for i, option in pairs(localinputobject.options) do
         local row = ""
-        local name = option.name
-        if active and localinputobject.selectionIndex.Y==i and localinputobject.selectionIndex.X==1 then
-            name = module.color(name, "orange")
+        local optionNameRaw = option.name
+        local paddedOptionName = optionNameRaw .. string.rep(" ", (longestX + 5) - #stripAnsiCodes(optionNameRaw))
+
+        if active and localinputobject.selectionIndex.Y == i and localinputobject.selectionIndex.X == 1 then
+            paddedOptionName = module.color(optionNameRaw, "orange") .. string.rep(" ", (longestX + 5) - #stripAnsiCodes(optionNameRaw))
         end
 
-        row = row .. string.format("\t [%d] %s%s",
-            i,
-            name,
-            (function()  -- create X options
-                local column = ""
+        row = row .. string.format("\t [%d] %s", i, paddedOptionName)
 
-                for n, m in pairs(option.subOptions) do
-                    local name = m.name
-                    if active and localinputobject.selectionIndex.Y==i and localinputobject.selectionIndex.X == (n+1) then
-                        name = module.color(name, "orange")
-                    end
+        for n, m in pairs(option.subOptions) do
+            local subNameRaw = m.name
+            local paddedSubName = subNameRaw .. string.rep(" ", (longestX + 5) - #stripAnsiCodes(subNameRaw))
 
-                    column = column .. name .. string.rep(" ", (longestX + 5)-#name)
-                end
+            if active and localinputobject.selectionIndex.Y == i and localinputobject.selectionIndex.X == (n + 1) then
+                paddedSubName = module.color(subNameRaw, "orange") .. string.rep(" ", (longestX + 5) - #stripAnsiCodes(subNameRaw))
+            end
 
-                return (string.rep(" ", (longestX + 5)-#option.name) .. column)
-            end)()
-        )
-
-
+            row = row .. paddedSubName
+        end
 
         str = str .. row .. "\n"
     end
 
-    return str 
-end 
+    return str
+end
+
 
 local function getSelected(localinputobject)
     local x, y = localinputobject.selectionIndex.X, localinputobject.selectionIndex.Y
