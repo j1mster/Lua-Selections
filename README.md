@@ -159,8 +159,7 @@ Use arrow keys to navigate.
 
 ## 📝 License
 
-MIT
-
+GNU GENERAL PUBLIC LICENSE
 ---
 
 ## 💬 Notes
