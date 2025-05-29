@@ -169,6 +169,8 @@ function module.input(key)
 
         if SuboptionCount<1 then 
             SuboptionCount = 1 
+        else 
+            SuboptionCount = SuboptionCount + 1 
         end 
 
 
