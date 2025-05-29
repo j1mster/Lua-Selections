@@ -1,17 +1,17 @@
 # lua-selections
 
-**`lua-selections`** is a simple Lua terminal UI library for Lua that allows you to prompt users for input via keyboard-navigable menus. Supports text input, arrow-key selection, and 2D option grids.
+**`lua-selections`** is a chaotic little Lua terminal UI library that lets you mess with your users using cute arrow-key menus, cursed prompts, and text input. ANSI colors included for extra spice.
 
 ---
 
 ## 🔧 Features
 
-- Arrow key navigation (↑ ↓ ← →)
-- Multi-level options (Y/X grid support)
-- Text input prompt
-- ANSI-colored output
-- Simple integration
-- Fully callback-based
+* Arrow key navigation (↑ ↓ ← →)
+* Y-only or full X/Y grid-style options
+* Text input prompts
+* Colored output with ANSI escapes
+* Fully callback-based flow
+* Refresh-based screen system (no `print()`!!)
 
 ---
 
@@ -21,13 +21,13 @@
 local selections = require("lua-selections")
 ```
 
-> ✅ Requires Lua + `luv` (libuv bindings).
+> ✅ Requires Lua + `luv` (libuv bindings)
 
 ---
 
-## 📋 Basic Usage
+## 📋 Example Usage
 
-### Simple Text Prompt
+### 🗣️ Text Input Prompt
 
 ```lua
 selections:prompt("What's your name?", function(name)
@@ -35,57 +35,55 @@ selections:prompt("What's your name?", function(name)
 end)
 ```
 
----
-
-### Single-Dimensional Selection
+### 🔢 Y-Only Menu Prompt
 
 ```lua
-selections:prompt("Choose an option:", {
-    "Yes", "No", "Maybe"
+selections:prompt("Pick a number:", {
+    "One",
+    "Two",
+    "Three"
 }, function(choice)
     selections:write("You picked: " .. choice)
 end)
 ```
 
----
-
-### Two-Dimensional Menu (Y/X Grid)
+### 🎯 X/Y Grid Prompt
 
 ```lua
-selections:prompt("Pick a tile:",
-    {"Row 1", "Row 2", "Row 3"},
-    {
-        {"A", "B", "C"},
-        {"D", "E", "F"},
-        {"G", "H", "I"}
-    },
-    function(choice)
-        selections:write("You picked: " .. choice)
-    end
-)
+selections:prompt("Choose your fighter:", {
+    Y = {"Strength", "Speed", "Magic"},
+    X = {
+        {"Buff Man", "Dad Bod"},
+        {"Fast Kid", "Blur"},
+        {"Wizard", "Witch"}
+    }
+}, function(choice)
+    selections:write("You chose: " .. choice)
+end)
 ```
 
 ---
 
-## ⚠️ Output Warning
-
-Because `lua-selections` **uses a refresh system that clears and redraws the screen**, you **must use**:
+## 💅 Output Like You Mean It
 
 ```lua
-selections:write("Text here")
-```
+-- This works ✅
+selections:write("Hi there!")
 
-**Do not use** `print()` or `io.write()` — they will be wiped on refresh.
+-- This WILL be cleared ❌
+print("Don't do this")
+io.write("Stop doing this too")
+```
 
 ---
 
-## 🎨 Colored Text
+## 🎨 ANSI Color Time
 
 ```lua
-selections:write(selections.color("Hello in red", "red"))
+selections:write(selections.color("This is red.", "red"))
 ```
 
-Supported colors:
+Available colors:
 
 ```
 black, red, green, yellow, blue,
@@ -95,48 +93,45 @@ pink, orange, brightBlue
 
 ---
 
-## 🧠 Prompt Structure
+## 🧠 Prompt Signature
 
 ```lua
-selections:prompt(
-    name,         -- string
-    optionsY?,    -- table of vertical options (rows)
-    optionsX?,    -- table of sub-options for each row
-    callback      -- function(selectedName)
-)
+selections:prompt(promptText, options, callback)
 ```
 
-### Example
+### Y-only menu:
 
 ```lua
-selections:prompt("Settings:",
-    {"Graphics", "Audio"},
-    {
-        {"Low", "High"},
-        {"Mute", "Medium", "Max"}
-    },
-    function(choice)
-        selections:write("You picked: " .. choice)
-    end
-)
+{"Option 1", "Option 2", "Option 3"}
+```
+
+### X/Y menu:
+
+```lua
+{
+    Y = {"Row 1", "Row 2", "Row 3"},
+    X = {
+        {"A", "B"},
+        {"C", "D"},
+        {"E", "F"}
+    }
+}
 ```
 
 ---
 
 ## ⌨️ Keybindings
 
-| Key        | Action                 |
-|------------|------------------------|
-| Arrow Keys | Move selection         |
-| Enter      | Confirm                |
-| Ctrl+C     | Exit / Stop input loop |
-| 1–9        | Jump to row (Y option) |
+| Key     | Action             |
+| ------- | ------------------ |
+| ↑ ↓ ← → | Navigate           |
+| Enter   | Confirm selection  |
+| Ctrl+C  | Cancel / Exit loop |
+| 1–9     | Jump to Y row      |
 
 ---
 
-## 🧼 Clearing Terminal
-
-You can manually clear the terminal:
+## 🧼 Clear Screen
 
 ```lua
 selections.clear()
@@ -144,13 +139,12 @@ selections.clear()
 
 ---
 
-## 📦 Example Output
+## 📦 Sample Output
 
 ```
-Choose a color:
- [1] Red
- [2] Green
- [3] Blue
+Choose a beverage:
+ [1] Water    Juice   Milk
+ [2] Soda     Tea     Coffee
 
 Use arrow keys to navigate.
 ```
@@ -160,15 +154,9 @@ Use arrow keys to navigate.
 ## 📝 License
 
 GNU GENERAL PUBLIC LICENSE
----
-
-## 💬 Notes
-
-- You can call `:prompt()` again even if a prompt is active — the old one will be closed automatically.
-- The selected result is passed to your callback as a string (`option.name`).
 
 ---
 
 ## 🤝 Contributing
 
-PRs and improvements welcome! If you add features like mouse input, resizing, or key remapping, feel free to open a pull request.
+PRs welcome! Add cursed features like mouse support, input remapping, emoji-based menus, or terminal chaos and toss in a pull request.
