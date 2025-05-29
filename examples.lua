@@ -1,7 +1,4 @@
---Make sure to download catmilk.webp and put it in the directory if youre gonna run the examples script ty love u :3
-
-
-local input = require("selections")
+local input = require("lua-selections")
 
 local function doomSequence()
     input:write("Nice choice, loser.")
@@ -32,7 +29,7 @@ end
 input:prompt("yo what's your name?", function(name)
     input:write("cool. hi " .. name .. ".")
 
-    input:prompt("be honest. how many chicken nuggets could you eat in one sitting?", {"4", "10", "20", "69", "none, I'm vegan"}, function(nugCount)
+    input:prompt("how many chicken nuggets could you eat in one sitting?", {"4", "10", "20", "69", "none, I'm vegan"}, function(nugCount)
         if nugCount == "none, I'm vegan" then
             input:write("bro just say you’re better than me and move on.")
         elseif nugCount == "69" then
