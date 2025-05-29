@@ -100,7 +100,7 @@ local function getSelected(localinputobject)
 end 
 
 local function refresh()
-    module.clear()
+    os.execute("cls")
 
     for _, v in pairs(messages) do
         Stdout:write(v .. "\n\n")
@@ -137,7 +137,8 @@ end
 
 
 function module.clear()
-    os.execute("cls")
+    messages = {}
+    refresh()
 end
 
 function module.input(key)
