@@ -50,12 +50,12 @@ end)
 ### 🎯 X/Y Grid Prompt
 
 ```lua
-selections:prompt("Choose your fighter:", {
-    Y = {"Strength", "Speed", "Magic"},
+selections:prompt("Category Example", {
+    Y = {"A1", "B1", "C1"},
     X = {
-        {"Buff Man", "Dad Bod"},
-        {"Fast Kid", "Blur"},
-        {"Wizard", "Witch"}
+        {"A2", "A3"},
+        {"B2, "B3"},
+        {"C2", "C3"}
     }
 }, function(choice)
     selections:write("You chose: " .. choice)
@@ -109,11 +109,11 @@ selections:prompt(promptText, options, callback)
 
 ```lua
 {
-    Y = {"Row 1", "Row 2", "Row 3"},
+    Y = {"A1", "B1", "C1"},
     X = {
-        {"A", "B"},
-        {"C", "D"},
-        {"E", "F"}
+        {"A2", "A3"},
+        {"B2", "B3"},
+        {"C2", "C3"}
     }
 }
 ```
