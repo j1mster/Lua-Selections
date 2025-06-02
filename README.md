@@ -1,6 +1,6 @@
 # lua-selections
 
-**`lua-selections`** is a chaotic little Lua terminal UI library that lets you mess with your users using cute arrow-key menus, cursed prompts, and text input. ANSI colors included for extra spice.
+**`lua-selections`** is a chaotic little Lua terminal UI library that lets you mess with your users using cute arrow-key menus, prompts, and text input. ANSI colors included for extra spice.
 
 ---
 
